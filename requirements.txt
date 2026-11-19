@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+c2pa-python==0.39.0
+pillow
+imagehash
+cryptography
+pytest
+httpx
