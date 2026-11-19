@@ -29,4 +29,9 @@ State lives in `data/` (SQLite DB + Ed25519 audit key, created on first run).
 - pHash threshold 8 and the confidence labels are arbitrary prototype values; pHash collisions/near-duplicates can give wrong recovered IDs.
 - No trust list is configured, so real-world signers show `untrusted`/`unknown` unless you configure c2pa trust settings.
 - Sample images are signed with a throwaway test CA generated at runtime.
-- Upload limit 20 MB, JPEG/PNG/WEBP only. No auth, no rate limiting, linear scan over known hashes.
+- Upload limit 4 MB (Vercel body limit), JPEG/PNG/WEBP only. No auth, no rate limiting, linear scan over known hashes.
+
+## Hosting (Vercel)
+`api/index.py` deploys it as a Vercel Python function; `/` redirects to the interactive `/docs`.
+**On Vercel, storage is in `/tmp` and is ephemeral**: stored results, registered pHashes and the audit signing key can vanish
+on a cold start, so a report's public key can change between calls. Fine for a demo. For anything real, use a persistent host or DB and a managed key.

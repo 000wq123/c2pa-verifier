@@ -1,13 +1,18 @@
 import io
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import RedirectResponse
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel
 from . import db, keys
 from .verify import verify_bytes
 
-MAX_BYTES = 20 * 1024 * 1024
+MAX_BYTES = 4 * 1024 * 1024  # Vercel request body limit is ~4.5 MB
 MIME = {"JPEG": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp"}
 app = FastAPI(title="C2PA verifier (prototype)")
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse("/docs")
 
 @app.get("/healthz")
 def healthz():

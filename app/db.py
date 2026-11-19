@@ -1,5 +1,6 @@
 import json, os, sqlite3
-DB_PATH = os.environ.get("C2PA_DB", "data/verifier.db")
+DATA_DIR = "/tmp" if os.environ.get("VERCEL") else "data"  # Vercel: only /tmp is writable (ephemeral)
+DB_PATH = os.environ.get("C2PA_DB", f"{DATA_DIR}/verifier.db")
 
 def conn():
     os.makedirs(os.path.dirname(DB_PATH) or ".", exist_ok=True)

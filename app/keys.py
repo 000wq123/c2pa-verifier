@@ -3,7 +3,7 @@ import base64, json, os
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
 
-KEY_PATH = os.environ.get("C2PA_AUDIT_KEY", "data/audit_ed25519.pem")
+KEY_PATH = os.environ.get("C2PA_AUDIT_KEY", ("/tmp" if os.environ.get("VERCEL") else "data") + "/audit_ed25519.pem")
 
 def _key() -> Ed25519PrivateKey:
     if not os.path.exists(KEY_PATH):
